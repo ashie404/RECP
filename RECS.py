@@ -87,7 +87,7 @@ def delete_message(message_id):
     message = [message for message in messages if message['id'] == message_id]
     if len(message) == 0:
         abort(404)
-    messages.remove(task[0])
+    messages.remove(message[0])
     return jsonify({'result': True})
 
 if __name__ == '__main__':
