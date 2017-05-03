@@ -1,8 +1,8 @@
 #!flask/bin/python
 
-# RECS | REST Chat Server
+# RECS | REST Chat Server | Main file
 # Server runner
-# Built off of Flask and Python by Joyesh.
+# Built off of Flask and Python 3 by Joyesh.
 
 # Imports
 from flask import Flask, jsonify, request
