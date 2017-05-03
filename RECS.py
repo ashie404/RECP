@@ -83,9 +83,9 @@ def send_message():
     return jsonify({'message': message}), 201
 
 @app.route('/recs/api/v1.0/message/<int:message_id>', methods=['DELETE'])
-def delete_message():
+def delete_message(message_id):
     message = [message for message in messages if message['id'] == message_id]
-    if len(task) == 0:
+    if len(message) == 0:
         abort(404)
     messages.remove(task[0])
     return jsonify({'result': True})
