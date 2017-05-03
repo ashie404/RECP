@@ -4,7 +4,7 @@
 # Server runner
 # Built off of Flask and Python 3 by Joyesh.
 
-# Imports
+# Import statements
 from flask import Flask, jsonify, request
 
 # RECS Flask app
