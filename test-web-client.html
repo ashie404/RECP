@@ -1,9 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-
-  </head>
   <body>
+    <h1>RECS web interface testing</h1>
+    <table id="chat">
 
+    </table>
+    <input id="chatbox" type="text" placeholder="Type your message here..."></input>
+    <button id="submitbtn">Send</button>
+
+    <!-- scripts -->
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- inline because i'm lazy -->
+    <script>
+
+function update() {
+  $.getJSON('http://localhost:5000/recs/api/v1.0/message', function(data) {
+    $.each(response, function(i, item) {
+      $('<tr>').append(
+        $('<td>').text(data.content),
+        $('<td>').text(data.id)
+      ).appendTo('#chat');
+    });
+  });
+}
+
+    update()
+</script>
   </body>
 </html>
