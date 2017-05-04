@@ -61,11 +61,12 @@ HTTP_STATUS_CODES = {
 
 messages = [
     {
-        'id': 1,
-        'authorid': 1,
-        'content': u'Hello world!'
-    },
-]
+        "id": 0,
+        "authorid": 0,
+        "content": "Successfully started RECS!",
+        "edited": False
+    }
+];
 
 # Main app
 
@@ -91,26 +92,61 @@ def send_message():
     message = {
         'id': messages[-1]['id'] + 1,
         'authorid': request.json['authorid'],
-        'content': request.json['content']
+        'content': request.json['content'],
+        'edited': False
     }
     # Add the message.
     messages.append(message)
 
     # Return HTTP 201
-    return httpcode(201)
+    return httpcode(200)
 
+# Delete message
 @app.route('/recs/api/v1.0/message/<int:message_id>', methods=['DELETE'])
 def delete_message(message_id):
     # Get message.
     message = [message for message in messages if message['id'] == message_id]
     # If the message doesn't exist, return 404 not found.
     if len(message) == 0:
-        return abort(404)
+        return httpcode(404)
 
     # Remove message
     messages.remove(message[0])
     # Return HTTP 201
-    return httpcode(201)
+    return httpcode(200)
+
+# Edit message
+@app.route('/recs/api/v1.0/message/<int:message_id>', methods=['PUT'])
+def edit_message(message_id):
+    # Get message
+    message = [message for message in messages if message['id'] == message_id]
+    # If the message doesn't exist, return 404 not found
+    if len(message) == 0:
+        return httpcode(404)
+    # If they didn't include content
+    if not 'content' in request.json:
+        return httpcode(400)
+
+    # Create a new message object based off of the old one.
+    try:
+        newmessage = {
+            'id': 1,
+            'authorid': 1,
+            'content': request.json['content'],
+            'edited': True
+        }
+    except:
+        return httpcode(500)
+
+    # Edit message
+    i = 0
+    for messagea in messages:
+        if messagea['id'] == message_id:
+            messages[i] = newmessage
+        i = i+1
+
+    # Success!
+    return httpcode(200)
 
 # Run app
 if __name__ == '__main__':

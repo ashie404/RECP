@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<!-- Basic web client for REST Chat Service -->
+<!-- Programmed by Joyesh -->
+
+<html>
+  <body onLoad="update()">
+    <style>table, th, td { border: 1px solid black;} #chat { width: 100%;}</style>
+    <h1 style="text-align:center;">RECP Basic Web Interface</h1>
+    <table id="chat"></table>
+    <input id="chatbox" type="text" style="width: 100%; margin-top: 5px;" placeholder="Type your message here..."></input>
+    <button onclick="submit()" style="margin: 0 auto;display:block;margin-top:5px;" id="submitbtn">Send</button>
+
+    <!-- scripts -->
+
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <!-- web client javascript -->
+    <script src="basic-web-client.js"></script>
+  </body>
+</html>
