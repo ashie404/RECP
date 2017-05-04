@@ -128,15 +128,14 @@ def edit_message(message_id):
         return httpcode(400)
 
     # Create a new message object based off of the old one.
-    try:
-        newmessage = {
-            'id': 1,
-            'authorid': 1,
-            'content': request.json['content'],
-            'edited': True
-        }
-    except:
-        return httpcode(500)
+
+    newmessage = {
+        'id': message[0]['id'],
+        'authorid': message[0]['authorid'],
+        'content': request.json['content'],
+        'edited': True
+    }
+
 
     # Edit message
     i = 0
