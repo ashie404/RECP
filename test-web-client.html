@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <body>
+    <style>table, th, td { border: 1px solid black; }</style>
     <h1>RECS web interface testing</h1>
     <table id="chat">
 
@@ -13,6 +14,24 @@
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- inline because i'm lazy -->
     <script>
+    
+function update() {
+  $.getJSON('http://localhost:5000/recs/api/v1.0/message' , function(data) {
+    var tbl_body = "";
+    var odd_even = false;
+    console.log(data);
+    $.each(data, function() {
+        var tbl_row = "";
+        $.each(this, function(k , v) {
+            tbl_row += "<td>"+v.content+"</td>";
+        })
+        tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
+        odd_even = !odd_even;
+    })
+    $("#chat").html(tbl_body);
+});
+}
+
 function submit() {
   $.ajax({
     type: 'POST',
@@ -23,18 +42,6 @@ function submit() {
     dataType: 'json'
   });
 }
-function update() {
-  dater = $.getJSON('http://localhost:5000/recs/api/v1.0/message', function(data) {
-    $.each(data, function(i, item) {
-      $('<tr>').append(
-        $('<td>').text(item.content),
-        $('<td>').text(item.id)
-      ).appendTo('#chat');
-    });
-  });
-}
-
-    update()
 </script>
   </body>
 </html>
