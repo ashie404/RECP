@@ -112,7 +112,7 @@ def delete_message(message_id):
 
     # Remove message
     messages.remove(message[0])
-    # Return HTTP 201
+    # Return HTTP 200
     return httpcode(200)
 
 # Edit message
