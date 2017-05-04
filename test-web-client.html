@@ -6,20 +6,29 @@
 
     </table>
     <input id="chatbox" type="text" placeholder="Type your message here..."></input>
-    <button id="submitbtn">Send</button>
+    <button onclick="submit()" id="submitbtn">Send</button>
 
     <!-- scripts -->
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
     <!-- inline because i'm lazy -->
     <script>
-
+function submit() {
+  $.ajax({
+    type: 'POST',
+    url: 'http://localhost:5000/recs/api/v1.0/message',
+    data: '{"authorid":1,"content":"' + $('#chatbox').val() + '"}',
+    success: function(data) { alert('data: ' + data); },
+    contentType: "application/json",
+    dataType: 'json'
+  });
+}
 function update() {
-  $.getJSON('http://localhost:5000/recs/api/v1.0/message', function(data) {
-    $.each(response, function(i, item) {
+  dater = $.getJSON('http://localhost:5000/recs/api/v1.0/message', function(data) {
+    $.each(data, function(i, item) {
       $('<tr>').append(
-        $('<td>').text(data.content),
-        $('<td>').text(data.id)
+        $('<td>').text(item.content),
+        $('<td>').text(item.id)
       ).appendTo('#chat');
     });
   });
