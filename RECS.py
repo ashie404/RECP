@@ -1,5 +1,7 @@
 #!flask/bin/python
 
+# This above is the directory to the virtual environment I'm running this in ^
+
 # RECS | REST Chat Server | Main file
 # Server runner
 # Built off of Flask and Python 3 by Joyesh.
@@ -9,6 +11,11 @@ from flask import Flask, jsonify, request
 
 # RECS Flask app
 app = Flask(__name__)
+
+# Variables
+
+# Run in debug mode (Allows people to execute python code on your computer! Do not use this in production)
+debug = True
 
 # HTTP status codes
 HTTP_STATUS_CODES = {
@@ -60,35 +67,55 @@ messages = [
     },
 ]
 
-def abort(error):
+# Main app
+
+# Send a HTTP error in JSON format
+
+def httpcode(error):
     return jsonify({str(error): HTTP_STATUS_CODES[str(error)]})
 
 # Get all messages
 @app.route('/recs/api/v1.0/message', methods=['GET'])
 def get_messages():
+    # Return all messages. This will probably be changed later on.
     return jsonify({'messages': messages})
 
 # Add message
 @app.route('/recs/api/v1.0/message', methods=['POST'])
 def send_message():
+    # Return 400 if they don't have required variables.
     if not request.json or not 'authorid' in request.json or not 'content' in request.json:
-        return abort(400)
+        return httpcode(400)
 
+    # Create a custom message object to prevent them adding variables themselves.
     message = {
         'id': messages[-1]['id'] + 1,
         'authorid': request.json['authorid'],
         'content': request.json['content']
     }
+    # Add the message.
     messages.append(message)
-    return jsonify({'message': message}), 201
+
+    # Return HTTP 201
+    return httpcode(201)
 
 @app.route('/recs/api/v1.0/message/<int:message_id>', methods=['DELETE'])
 def delete_message(message_id):
+    # Get message.
     message = [message for message in messages if message['id'] == message_id]
+    # If the message doesn't exist, return 404 not found.
     if len(message) == 0:
         return abort(404)
-    messages.remove(message[0])
-    return jsonify({'result': True})
 
+    # Remove message
+    messages.remove(message[0])
+    # Return HTTP 201
+    return httpcode(201)
+
+# Run app
 if __name__ == '__main__':
-    app.run(debug=True)
+    # If we're in debug mode or not
+    if debug:
+        app.run(debug=True)
+    else:
+        app.run()
