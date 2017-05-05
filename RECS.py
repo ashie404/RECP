@@ -66,7 +66,15 @@ messages = [
         "content": "Successfully started RECS!",
         "edited": False
     }
-];
+]
+accounts = [
+    {
+        "id": 0,
+        "name": "SystemBot",
+        "token": "NO_TOKEN" # Why do you want to know the token for the system account? You know it doesn't exist ;)
+    }
+
+]
 
 # Main app
 
@@ -75,11 +83,30 @@ messages = [
 def httpcode(error):
     return jsonify({str(error): HTTP_STATUS_CODES[str(error)]})
 
+### Account API routing and functions.
+
+# Get all accounts
+
+
+### Message API routing and functions.
+
 # Get all messages
 @app.route('/recs/api/v1.0/message', methods=['GET'])
 def get_messages():
     # Return all messages. This will probably be changed later on.
     return jsonify({'messages': messages})
+
+# Get a certain message
+@app.route('/recs/api/v1.0/message/<int:message_id>', methods=['GET'])
+def get_message(message_id):
+    # Get message
+    message = [message for message in messages if message['id'] == message_id]
+    # If the message doesn't exist, return 404 not found
+    if len(message) == 0:
+        return httpcode(404)
+
+    # If it does exist, instead return the user
+    return message
 
 # Add message
 @app.route('/recs/api/v1.0/message', methods=['POST'])

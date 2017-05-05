@@ -1,0 +1,30 @@
+table, th, td {
+  border-width: 2px;
+  border-style: solid;
+  border-color: #7c5844 #e8e8c8 #e8e8c8 #7c5844;
+  background-color: #000;
+  color: #FFF;
+}
+table {
+  background-color: #b49478;
+  border-color: #e8e8c8 #7c5844 #7c5844 #e8e8c8;
+}
+#chat {
+  width: 100%;
+}
+body {font-family: 'Ubuntu', sans-serif;}
+button {
+
+  color: #070707;
+  background: #bfbfbf;
+  border: 2px solid;
+  border-top-color: #dfdfdf;
+  border-left-color: #dfdfdf;
+  border-right-color: #808080;
+  border-bottom-color: #808080;
+  box-shadow: 1px 1px 0 0 #000;
+  text-align: center;
+  outline: none;
+  padding: 4px;
+  cursor: default;
+}

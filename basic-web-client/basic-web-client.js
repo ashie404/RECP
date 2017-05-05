@@ -13,7 +13,7 @@ function update() {
         $.each(this, function(k , v) {
             tbl_row += "<tr><td>User" + v.authorid + ": " +v.content+"</td><td>Message ID: " + v.id + ", Edited: " + v.edited + "</td>" + delbutton + v.id + delbutton2 + editbtn + v.id + editbtn2 + "</tr>";
         })
-        tbl_body += "<tr class=\""+( odd_even ? "odd" : "even")+"\">"+tbl_row+"</tr>";
+        tbl_body += "<tr><td><b>Message</b></td><td><b>Message Information</b></td><td><b>Actions</b></td></tr><tr>"+tbl_row+"</tr>";
         odd_even = !odd_even;
     })
     $("#chat").html(tbl_body);
@@ -42,9 +42,12 @@ function deletemsg(id) {
 function editmsg(id) {
   var msg = prompt('What to replace the message with?');
 
-  if (msg == null || msg == "")
+  if (msg == "")
   {
     alert('You must enter a string to replace it with!');
+  }
+  else if (msg == null) {
+    alert('User cancelled message editing.')
   }
   else {
     $.ajax({
