@@ -8,6 +8,7 @@
 
 # Import statements
 from flask import Flask, jsonify, request
+import uuid
 
 # RECS Flask app
 app = Flask(__name__)
@@ -85,8 +86,27 @@ def httpcode(error):
 
 ### Account API routing and functions.
 
-# Get all accounts
+# Create account
+@app.route('/recp/api/v1.0/account', methods=['POST'])
+def create_account():
+    if not request.json or not 'name' in request.json:
+        return httpcode(400)
 
+    # Create the user
+    user = {
+        'id': accounts[-1]['id'] + 1,
+        'name': request.json['name'],
+        'token': str(uuid.uuid1())
+    }
+
+    accounts.append(user)
+
+    return httpcode(200)
+
+# Get accounts
+@app.route('/recp/api/v1.0/account', methods=['GET'])
+def get_accounts():
+    return jsonify({'accounts': accounts})
 
 ### Message API routing and functions.
 
@@ -169,7 +189,7 @@ def edit_message(message_id):
     for messagea in messages:
         if messagea['id'] == message_id:
             messages[i] = newmessage
-        i = i+1
+        i += 1
 
     # Success!
     return httpcode(200)
