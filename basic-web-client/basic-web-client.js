@@ -1,6 +1,7 @@
 
 function update() {
-  $.getJSON('http://localhost:5000/recs/api/v1.0/message' , function(data) {
+
+  $.getJSON('http://localhost:5000/recp/api/v1.0/message' , function(data) {
     var tbl_body = "";
     var odd_even = false;
     console.log(data);
@@ -18,12 +19,15 @@ function update() {
     })
     $("#chat").html(tbl_body);
 });
+
+  //$("#chat").html("<tr><td><center><b>Failed to connect to update chat logs.</b></center></td></tr>");
+
 }
 
 function submit() {
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:5000/recs/api/v1.0/message',
+    url: 'http://localhost:5000/recp/api/v1.0/message',
     data: '{"authorid":1,"content":"' + $('#chatbox').val() + '"}',
     contentType: "application/json",
     dataType: 'json'
@@ -34,7 +38,7 @@ function submit() {
 function deletemsg(id) {
   $.ajax({
     type: 'DELETE',
-    url: 'http://localhost:5000/recs/api/v1.0/message/' + id
+    url: 'http://localhost:5000/recp/api/v1.0/message/' + id
   });
   update();
 }
@@ -52,7 +56,7 @@ function editmsg(id) {
   else {
     $.ajax({
       type: 'PUT',
-      url: 'http://localhost:5000/recs/api/v1.0/message/' + id,
+      url: 'http://localhost:5000/recp/api/v1.0/message/' + id,
       data: '{"content":"' + msg + '"}',
       contentType: "application/json",
       dataType: 'json'

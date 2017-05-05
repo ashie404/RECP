@@ -2,8 +2,8 @@
 
 # This above is the directory to the virtual environment I'm running this in ^
 
-# RECS | REST Chat Server | Main file
-# Server runner
+# RECP | REST Chat Protocol | Main file
+
 # Built off of Flask and Python 3 by Joyesh.
 
 # Import statements
@@ -91,13 +91,13 @@ def httpcode(error):
 ### Message API routing and functions.
 
 # Get all messages
-@app.route('/recs/api/v1.0/message', methods=['GET'])
+@app.route('/recp/api/v1.0/message', methods=['GET'])
 def get_messages():
     # Return all messages. This will probably be changed later on.
     return jsonify({'messages': messages})
 
 # Get a certain message
-@app.route('/recs/api/v1.0/message/<int:message_id>', methods=['GET'])
+@app.route('/recp/api/v1.0/message/<int:message_id>', methods=['GET'])
 def get_message(message_id):
     # Get message
     message = [message for message in messages if message['id'] == message_id]
@@ -109,7 +109,7 @@ def get_message(message_id):
     return message
 
 # Add message
-@app.route('/recs/api/v1.0/message', methods=['POST'])
+@app.route('/recp/api/v1.0/message', methods=['POST'])
 def send_message():
     # Return 400 if they don't have required variables.
     if not request.json or not 'authorid' in request.json or not 'content' in request.json:
@@ -129,7 +129,7 @@ def send_message():
     return httpcode(200)
 
 # Delete message
-@app.route('/recs/api/v1.0/message/<int:message_id>', methods=['DELETE'])
+@app.route('/recp/api/v1.0/message/<int:message_id>', methods=['DELETE'])
 def delete_message(message_id):
     # Get message.
     message = [message for message in messages if message['id'] == message_id]
