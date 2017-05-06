@@ -89,8 +89,9 @@ def httpcode(error):
 # Create account
 @app.route('/recp/api/v1.0/account', methods=['POST'])
 def create_account():
+    # note to self: stop working late on this
     if not request.json or not 'name' in request.json:
-        return httpcode(400)
+        return httpcode(400), 400
 
     # Create the user
     user = {
@@ -99,9 +100,11 @@ def create_account():
         'token': str(uuid.uuid1())
     }
 
+    # append the user
     accounts.append(user)
 
-    return httpcode(201)
+    # return some http code
+    return httpcode(201), 201
 
 # Get accounts
 @app.route('/recp/api/v1.0/account/<int:user_id>', methods=['GET'])
@@ -110,7 +113,7 @@ def get_accounts(user_id):
     account = [account for account in accounts if account['id'] == user_id]
 
     if len(account) == 0:
-        return httpcode(404)
+        return httpcode(404), 404
 
     newaccount = {
         'name': account[0]['name'],
@@ -134,9 +137,9 @@ def get_message(message_id):
     message = [message for message in messages if message['id'] == message_id]
     # If the message doesn't exist, return 404 not found
     if len(message) == 0:
-        return httpcode(404)
+        return httpcode(404), 404
 
-    # If it does exist, instead return the user
+    # If it does exist, instead return the message
     return message
 
 # Add message
@@ -144,7 +147,7 @@ def get_message(message_id):
 def send_message():
     # Return 400 if they don't have required variables.
     if not request.json or not 'authorid' in request.json or not 'content' in request.json:
-        return httpcode(400)
+        return httpcode(400), 400
 
     # Create a custom message object to prevent them adding variables themselves.
     message = {
@@ -157,7 +160,7 @@ def send_message():
     messages.append(message)
 
     # Return HTTP 201
-    return httpcode(201)
+    return httpcode(201), 201
 
 # Delete message
 @app.route('/recp/api/v1.0/message/<int:message_id>', methods=['DELETE'])
@@ -166,12 +169,12 @@ def delete_message(message_id):
     message = [message for message in messages if message['id'] == message_id]
     # If the message doesn't exist, return 404 not found.
     if len(message) == 0:
-        return httpcode(404)
+        return httpcode(404), 404
 
     # Remove message
     messages.remove(message[0])
     # Return HTTP 200
-    return httpcode(200)
+    return httpcode(200), 200
 
 # Edit message
 @app.route('/recs/api/v1.0/message/<int:message_id>', methods=['PUT'])
@@ -180,10 +183,10 @@ def edit_message(message_id):
     message = [message for message in messages if message['id'] == message_id]
     # If the message doesn't exist, return 404 not found
     if len(message) == 0:
-        return httpcode(404)
+        return httpcode(404), 404
     # If they didn't include content
     if not 'content' in request.json:
-        return httpcode(400)
+        return httpcode(400), 400
 
     # Create a new message object based off of the old one.
 
@@ -203,7 +206,7 @@ def edit_message(message_id):
         i += 1
 
     # Success!
-    return httpcode(200)
+    return httpcode(200), 200
 
 # Run app
 if __name__ == '__main__':
