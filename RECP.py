@@ -101,12 +101,23 @@ def create_account():
 
     accounts.append(user)
 
-    return httpcode(200)
+    return httpcode(201)
 
 # Get accounts
-@app.route('/recp/api/v1.0/account', methods=['GET'])
-def get_accounts():
-    return jsonify({'accounts': accounts})
+@app.route('/recp/api/v1.0/account/<int:user_id>', methods=['GET'])
+def get_accounts(user_id):
+
+    account = [account for account in accounts if account['id'] == user_id]
+
+    if len(account) == 0:
+        return httpcode(404)
+
+    newaccount = {
+        'name': account[0]['name'],
+        'id': account[0]['id']
+    }
+
+    return jsonify(newaccount)
 
 ### Message API routing and functions.
 
@@ -146,7 +157,7 @@ def send_message():
     messages.append(message)
 
     # Return HTTP 201
-    return httpcode(200)
+    return httpcode(201)
 
 # Delete message
 @app.route('/recp/api/v1.0/message/<int:message_id>', methods=['DELETE'])
