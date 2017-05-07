@@ -106,7 +106,7 @@ def create_account():
     # return some http code
     return httpcode(201)
 
-# Get accounts
+# Get account
 @app.route('/recp/api/v1.0/account/<int:user_id>', methods=['GET'])
 def get_accounts(user_id):
 
