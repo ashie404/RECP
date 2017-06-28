@@ -1,3 +1,4 @@
 ### Ignore virtual env
 flask/
 .DS_Store
+RECP-2-web-client/
