@@ -16,7 +16,7 @@ app = Flask(__name__)
 # Variables
 
 # Run in debug mode (Allows people to execute python code on your computer! Do not use this in production)
-debug = False
+debug = True
 
 # HTTP status codes
 HTTP_STATUS_CODES = {
