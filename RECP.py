@@ -84,6 +84,19 @@ accounts = [
 def httpcode(error):
     return jsonify({str(error): HTTP_STATUS_CODES[str(error)]}), error
 
+### Static page routing
+@app.route("/")
+def root():
+    return app.send_static_file("basic-web-client/basic-web-client.html")
+
+@app.route("/basic-web-client.css")
+def css():
+    return app.send_static_file("basic-web-client/basic-web-client.css")
+
+@app.route("/basic-web-client.js")
+def js():
+    return app.send_static_file("basic-web-client/basic-web-client.js")
+
 ### Account API routing and functions.
 
 # Create account
